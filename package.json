@@ -9,13 +9,13 @@
     "files": [
         "src"
     ],
-    "homepage": "https://github.com/MicrosApp/MicroApp-Core",
+    "homepage": "https://github.com/MicrosApp/MicroApp-Plugin-Vue-CLI",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/MicrosApp/MicroApp-Core.git"
+        "url": "git+https://github.com/MicrosApp/MicroApp-Plugin-Vue-CLI.git"
     },
     "bugs": {
-        "url": "https://github.com/MicrosApp/MicroApp-Core/issues"
+        "url": "https://github.com/MicrosApp/MicroApp-Plugin-Vue-CLI/issues"
     },
     "keywords": [
         "micro",
@@ -29,7 +29,7 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "@micro-app/core": "^0.1.1-rc.5",
+        "@micro-app/core": "0.1.0-beta.30",
         "@types/jest": "^24.0.18",
         "babel-eslint": "^10.0.2",
         "coveralls": "^3.0.6",
