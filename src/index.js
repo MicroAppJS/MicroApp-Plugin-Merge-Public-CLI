@@ -4,6 +4,9 @@ const path = require('path');
 
 module.exports = function VueCLIAdapter(api, opts = {}) {
 
+    // commands
+    require('./commands/version')(api);
+
     // Current working directory.
     api.extendMethod('getCwd', () => {
         return opts.root || api.root;
