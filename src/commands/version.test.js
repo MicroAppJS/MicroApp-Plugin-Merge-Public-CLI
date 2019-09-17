@@ -11,7 +11,7 @@ describe('Command version', () => {
         const { service } = require('@micro-app/cli/bin/base');
 
         service.registerPlugin({
-            id: 'test:VueCLIVersion',
+            id: 'test:MergePublicCommand',
             link: path.join(__dirname, './version.js'),
         });
 

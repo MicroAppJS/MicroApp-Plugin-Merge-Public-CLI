@@ -1,58 +1,55 @@
 'use strict';
 
-const path = require('path');
+module.exports = function MergePublicCommand(api, opts = {}) {
 
-module.exports = function VueCLIAdapter(api, opts = {}) {
+    const chalk = require('chalk');
 
     // commands
     require('./commands/version')(api);
 
-    // Current working directory.
-    api.extendMethod('getCwd', () => {
-        return opts.root || api.root;
-    });
+    // merge
+    api.registerCommand('merge', {
+        description: 'merge public files for production',
+        usage: 'micro-app merge',
+        details: `
+    Examples:
+    ${chalk.gray('# merge')}
+    micro-app merge
+        `.trim(),
+    }, args => {
+        const logger = api.logger;
+        const root = api.root;
+        const selfConfig = api.config;
+        const config = Object.assign(require('./config'), opts);
 
-    /**
-     * Resolve path for a project.
-     *
-     * @param {string} _path - Relative path from project root
-     * @return {string} The resolved absolute path.
-     */
-    api.extendMethod('resolve', _path => {
-        const context = api.getCwd();
-        return path.resolve(context, _path);
-    });
+        const micros = api.micros;
+        const microsConfig = api.microsConfig;
 
-    api.extendMethod('assertVersion', range => {
-        api.logger.warn(`assertVersion(${range}); 方法未真实实现 !`);
-        return true;
-    });
+        const assert = require('assert');
+        assert(typeof config.handler === 'function', 'config.handler must be function!');
+        assert(typeof config.dest === 'string' && config.dest, 'config.dist must be string!');
+        assert(typeof config.origin === 'object' && config.origin, 'config.origin must be object!');
 
-    api.extendMethod('genCacheConfig', () => {
-        api.logger.warn('genCacheConfig(); 方法未真实实现 !');
-        const cacheDirectory = '';
-        const cacheIdentifier = '';
-        return { cacheDirectory, cacheIdentifier };
-    });
+        // 清理 dest 目录
+        if (config.clear === true) {
+            const del = require('delete');
+            const path = require('path');
+            const dist = path.resolve(selfConfig.root, config.dest);
+            const fs = require('fs');
+            if (fs.existsSync(dist) && fs.statSync(dist).isDirectory()) {
+                const deleteds = del.sync(`${dist}/**/*`, { force: true });
+                deleteds.forEach(item => {
+                    logger.info(`Clear "${item}"`);
+                });
+                logger.success(`Clear all ${deleteds.length} files!`);
+            }
+        }
 
-    api.registerMethod('chainWebpack', {
-        type: api.API_TYPE.EVENT,
-        description: '适配 vue-cli 中 chainWebpack 事件',
-    });
-    api.registerMethod('configureWebpack', {
-        type: api.API_TYPE.MODIFY,
-        description: '适配 vue-cli 中 configureWebpack 事件, 需要返回值',
-    });
-    api.registerMethod('configureDevServer', {
-        type: api.API_TYPE.EVENT,
-        description: '适配 vue-cli 中 configureDevServer 事件',
-    });
+        micros.forEach(key => {
+            const mc = microsConfig[key];
+            config.handler(key, mc, selfConfig, api);
+        });
 
-    api.onChainWebpcakConfig(config => {
-        api.applyPluginHooks('chainWebpack', config);
-    });
-
-    api.modifyWebpcakConfig(config => {
-        return api.applyPluginHooks('configureWebpack', config);
+        logger.logo('Merge Finish!');
     });
 };

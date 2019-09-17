@@ -6,25 +6,17 @@ const MicroApp = require('@micro-app/core');
 const Service = MicroApp.Service;
 const path = require('path');
 
-describe('Plugin VueCLIAdapter', () => {
+describe('Plugin MergePublicCommand', () => {
 
-    it('VueCLIAdapter', () => {
+    it('MergePublicCommand', () => {
         const service = new Service();
         service.registerPlugin({
-            id: 'test:VueCLIAdapter',
+            id: 'test:MergePublicCommand',
             link: path.join(__dirname, './index.js'),
         });
 
-        service.run('help', { _: [] });
-
-        // expect(api.chainWebpack).not.toBeUndefined();
-        // expect(api.chainWebpack).not.toBeNull();
-
-        // expect(api.configureWebpack).not.toBeUndefined();
-        // expect(api.configureWebpack).not.toBeNull();
-
-        // expect(api.configureDevServer).not.toBeUndefined();
-        // expect(api.configureDevServer).not.toBeNull();
+        // service.run('help', { _: [] });
+        service.run('merge', { _: [] });
     });
 
 });
