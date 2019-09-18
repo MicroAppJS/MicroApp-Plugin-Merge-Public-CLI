@@ -18,15 +18,14 @@ module.exports = function MergePublicCommand(api, opts = {}) {
         `.trim(),
     }, args => {
         const logger = api.logger;
-        const root = api.root;
+        // const root = api.root;
         const selfConfig = api.config;
         const config = Object.assign(require('./config'), opts);
 
-        const micros = api.micros;
-        const microsConfig = api.microsConfig;
-
         const assert = require('assert');
+        assert(typeof config.before === 'function', 'config.before must be function!');
         assert(typeof config.handler === 'function', 'config.handler must be function!');
+        assert(typeof config.after === 'function', 'config.after must be function!');
         assert(typeof config.dest === 'string' && config.dest, 'config.dist must be string!');
         assert(typeof config.origin === 'object' && config.origin, 'config.origin must be object!');
 
@@ -45,10 +44,11 @@ module.exports = function MergePublicCommand(api, opts = {}) {
             }
         }
 
-        micros.forEach(key => {
-            const mc = microsConfig[key];
-            config.handler(key, mc, selfConfig, api);
-        });
+        config.before(api);
+
+        config.handler(api);
+
+        config.after(api);
 
         logger.logo('Merge Finish!');
     });
