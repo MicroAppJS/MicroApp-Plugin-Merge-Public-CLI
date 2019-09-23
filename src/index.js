@@ -53,3 +53,7 @@ module.exports = function MergePublicCommand(api, opts = {}) {
         logger.logo('Merge Finish!');
     });
 };
+
+module.exports.configuration = {
+    description: '公共资源文件 public 合并操作',
+};
