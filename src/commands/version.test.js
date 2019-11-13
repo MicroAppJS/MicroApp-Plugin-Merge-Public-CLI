@@ -15,7 +15,7 @@ describe('Command version', () => {
             link: path.join(__dirname, './version.js'),
         });
 
-        const plugin = service.plugins.find(item => item.id === 'cli:plugins-commands-version');
+        const plugin = service.plugins.find(item => item.id === 'cli:plugin-command-version');
         expect(typeof plugin).toEqual('object');
 
         service.init();

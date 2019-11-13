@@ -9,13 +9,13 @@
     "files": [
         "src"
     ],
-    "homepage": "https://github.com/MicrosApp/MicroApp-Plugin-Merge-Public-CLI",
+    "homepage": "https://github.com/MicroAppJS/MicroApp-Plugin-Merge-Public-CLI",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/MicrosApp/MicroApp-Plugin-Merge-Public-CLI.git"
+        "url": "git+https://github.com/MicroAppJS/MicroApp-Plugin-Merge-Public-CLI.git"
     },
     "bugs": {
-        "url": "https://github.com/MicrosApp/MicroApp-Plugin-Merge-Public-CLI/issues"
+        "url": "https://github.com/MicroAppJS/MicroApp-Plugin-Merge-Public-CLI/issues"
     },
     "keywords": [
         "micro",

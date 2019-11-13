@@ -18,8 +18,7 @@ module.exports = function MergePublicCommand(api, opts = {}) {
         `.trim(),
     }, args => {
         const logger = api.logger;
-        // const root = api.root;
-        const selfConfig = api.config;
+        const root = api.root;
         const config = Object.assign(require('./config'), opts);
 
         const assert = require('assert');
@@ -33,7 +32,7 @@ module.exports = function MergePublicCommand(api, opts = {}) {
         if (config.clear === true) {
             const del = require('delete');
             const path = require('path');
-            const dist = path.resolve(selfConfig.root, config.dest);
+            const dist = path.resolve(root, config.dest);
             const fs = require('fs');
             if (fs.existsSync(dist) && fs.statSync(dist).isDirectory()) {
                 const deleteds = del.sync(`${dist}/**/*`, { force: true });
