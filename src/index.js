@@ -25,7 +25,7 @@ module.exports = function MergePublicCommand(api, opts = {}) {
         assert(typeof config.before === 'function', 'config.before must be function!');
         assert(typeof config.handler === 'function', 'config.handler must be function!');
         assert(typeof config.after === 'function', 'config.after must be function!');
-        assert(typeof config.dest === 'string' && config.dest, 'config.dist must be string!');
+        assert(typeof config.dest === 'string' && config.dest, 'config.dest must be string!');
         assert(typeof config.origin === 'object' && config.origin, 'config.origin must be object!');
 
         // 清理 dest 目录
